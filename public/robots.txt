@@ -1,0 +1,28 @@
+# Few Threads — https://fewthreads.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /settings
+Disallow: /my-architectures
+
+# AI assistants and answer engines are welcome to read public pages
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://fewthreads.com/sitemap.xml

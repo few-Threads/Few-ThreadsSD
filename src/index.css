@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+@import "tailwindcss";
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+:root {
+  /* Canvas / App */
+  --bg:             #0D0D10;
+  --sidebar-bg:     #111116;
+  --panel-bg:       #141419;
+  --card-bg:        #1A1A24;
+  --card-hover:     #20202E;
+  --input-bg:       #0D0D14;
+
+  /* Borders */
+  --border:         #252535;
+  --border-dim:     #1C1C28;
+  --border-bright:  #303048;
+
+  /* Text */
+  --text:           #E2E8F0;
+  --text-dim:       #64748B;
+  --text-muted:     #3A3A52;
+
+  /* Theme-aware aliases — panels/components should use these */
+  --bg-primary:    var(--bg);
+  --bg-secondary:  var(--sidebar-bg);
+  --bg-tertiary:   var(--panel-bg);
+  --bg-card:       var(--card-bg);
+  --text-primary:  var(--text);
+  --text-secondary: var(--text-dim);
+
+  /* Accent */
+  --accent:         #7C3AED;
+  --accent-bright:  #8B5CF6;
+  --accent-glow:    rgba(124,58,237,0.35);
+
+  /* Category colors */
+  --cat-network:        #2563EB;
+  --cat-compute:        #7C3AED;
+  --cat-data:           #D97706;
+  --cat-messaging:      #DC2626;
+  --cat-infrastructure: #0891B2;
+  --cat-monitoring:     #059669;
+
+  /* Status */
+  --status-healthy:   #22C55E;
+  --status-degraded:  #EAB308;
+  --status-critical:  #EF4444;
+
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+/* Input base */
+input, select {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus, select:focus { border-color: var(--accent-bright); }
+
+/* Sim slider */
+.sim-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+  border: none;
+}
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  border: 2px solid #0A0A0F;
+  box-shadow: 0 0 6px rgba(139,92,246,0.6);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.sim-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(139,92,246,0.85);
+}
+.sim-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  border: 2px solid #0A0A0F;
+  box-shadow: 0 0 6px rgba(139,92,246,0.6);
+  cursor: pointer;
+}
+.sim-slider.traffic::-webkit-slider-thumb { background: #F59E0B; box-shadow: 0 0 6px rgba(245,158,11,0.6); }
+.sim-slider.traffic::-webkit-slider-thumb:hover { box-shadow: 0 0 10px rgba(245,158,11,0.85); }
+
+/* ReactFlow */
+.react-flow__background { background: var(--bg) !important; }
+.react-flow__controls {
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  fill: var(--text-dim) !important;
+  width: 28px !important; height: 28px !important;
+  transition: all 0.15s !important;
+}
+.react-flow__controls-button:last-child { border-bottom: none !important; }
+.react-flow__controls-button:hover { background: var(--card-hover) !important; fill: var(--text) !important; }
+.react-flow__controls-button svg { width: 12px !important; height: 12px !important; }
+.react-flow__minimap {
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+}
+.react-flow__minimap-mask { fill: rgba(13,13,16,0.7) !important; }
+.react-flow__edge-path { stroke: #252535 !important; stroke-width: 1.5 !important; }
+.react-flow__edge.selected .react-flow__edge-path { stroke: var(--accent) !important; }
+/* Handles: subtle dot by default, fully revealed on node hover/selected */
+.react-flow__handle {
+  border-radius: 50% !important;
+  border: 2px solid var(--bg) !important;
+  opacity: 0.35 !important;
+  cursor: crosshair !important;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease !important;
+}
+.react-flow__node:hover .react-flow__handle,
+.react-flow__node.selected .react-flow__handle {
+  opacity: 0.95 !important;
+}
+/* Invisible large hit-box to make clicking handles extremely easy and prevent misclicking/dragging the pane */
+.react-flow__handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  cursor: crosshair !important;
+  pointer-events: all !important;
+}
+/* Extra visual pop on hover of the handle itself */
+.react-flow__handle:hover {
+  opacity: 1 !important;
+  transform: scale(1.4) !important;
+  box-shadow: 0 0 10px var(--accent-bright) !important;
+}
+/* Show ALL handles and animate them when a connection is actively being dragged, guiding the user to target nodes */
+.react-flow__connection-connecting .react-flow__handle,
+.react-flow__container.connection-connecting .react-flow__handle,
+.react-flow__pane.connection-connecting .react-flow__handle,
+.react-flow.connection-connecting .react-flow__handle,
+.react-flow--connection-connecting .react-flow__handle {
+  opacity: 0.85 !important;
+  animation: handle-pulse 1.4s infinite alternate ease-in-out !important;
+}
+
+/* Node: allow overflow so action buttons can float above card */
+.react-flow__node {
+  overflow: visible !important;
+}
+
+/* Floating action bar above node — show on node hover/selected */
+.react-flow__node .node-actions {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.react-flow__node:hover .node-actions,
+.react-flow__node.selected .node-actions {
+  opacity: 1 !important;
+  pointer-events: all !important;
+}
+
+/* Edge flow animations — decreasing dashoffset moves dashes forward (source→target) */
+@keyframes edge-flow {
+  from { stroke-dashoffset: 23; }
+  to   { stroke-dashoffset: 0; }    /* 5px dash + 18px gap = 23px cycle */
+}
+@keyframes edge-flow-attack {
+  from { stroke-dashoffset: 16; }
+  to   { stroke-dashoffset: 0; }    /* 4px dash + 12px gap = 16px cycle */
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+@keyframes handle-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0px transparent;
+  }
+  100% {
+    transform: scale(1.25);
+    box-shadow: 0 0 8px var(--accent-bright);
+  }
+}
+@keyframes node-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.012); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes attack-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+}
+@keyframes scanline {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(100vh); }
+}
+@keyframes float-up-down {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.fade-up { animation: fadeUp 0.3s ease forwards; }
+.slide-right { animation: slide-in-right 0.25s ease forwards; }
+
+/* Landing page background nodes */
+.landing-bg-node {
+  position: absolute;
+  border-radius: 8px;
+  border: 1px solid rgba(124,58,237,0.12);
+  background: rgba(124,58,237,0.04);
+  animation: float-up-down 4s ease-in-out infinite;
+}
+.landing-bg-node::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: rgba(124,58,237,0.3);
+  border-radius: 0 2px 2px 0;
+}

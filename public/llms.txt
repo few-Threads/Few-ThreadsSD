@@ -1,0 +1,24 @@
+# Few Threads
+
+> Few Threads is an AI-powered system design studio in the browser. Users design software architectures on an infinite canvas, generate designs from natural-language prompts, simulate traffic and chaos failures, estimate cloud costs, and learn distributed systems through lessons, quizzes and timed interview practice.
+
+The name comes from the idea that every large system is a few threads — requests, queues, replicas, connections — woven together well. Pull one thread (crash a node, partition a network) and you learn what the design really depends on.
+
+## What you can do
+
+- **AI architecture generator**: describe requirements in plain English; the AI co-pilot places and connects components on the canvas.
+- **AI design review**: feedback on single points of failure, scaling bottlenecks, caching, and cost (powered by Llama 3.3 via Groq, with Gemini as fallback).
+- **High-level design canvas**: 169+ components (API gateways, load balancers, Kafka, Redis, PostgreSQL, Kubernetes, CDNs, and more) connected with HTTP, gRPC, WebSocket and TCP links, with live packet-flow animation.
+- **Chaos engineering lab**: 30 scenarios including database crashes, split-brain partitions and latency spikes, with throughput, p99 latency and error-rate metrics.
+- **Cloud cost estimator**: monthly estimates for AWS, GCP and Azure as replicas and traffic change.
+- **Low-level design**: ERD schema builder, REST/GraphQL API design, UML class and sequence diagrams.
+- **Academy**: 7 tracks (System Design Fundamentals, Backend Engineering, Distributed Systems, Cloud Architecture, Security Engineering, DevOps & SRE, Interview Preparation), 245 quizzes.
+- **Interview mode**: timed 45–60 minute system design challenges with hints and AI follow-up questions.
+
+## Links
+
+- [Home](https://fewthreads.com/)
+- [Create a free account](https://fewthreads.com/register)
+- [Log in](https://fewthreads.com/login)
+
+Guest mode gives an instant workspace without sign-up.
